@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:f="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Графики</title>
+</h:head>
+<body>
+<h:form id="configuration_form">
+<f:insert name="menu" >
+    <f:include src="/pages/template/common/menu.xhtml" />
+</f:insert>
+
+<p:commandButton id="addCurrencyButton" type="button" value="Добавить валюту" onclick="addCurrencyDlg.show()"/>
+
+    <p:dialog header="Добавить валюту" widgetVar="addCurrencyDlg" resizable="false">
+
+        <p:outputLabel id="currency_name_label" for="currency_name_input">Имя:</p:outputLabel>
+        <p:inputText id="currency_name_input" value="#{addCurrency.name}" maxlength="15"></p:inputText>
+        <p:outputLabel id="currency_sign_label" for="currency_sign_input">Знак:</p:outputLabel>
+        <p:inputText id="currency_sign_input" value="#{addCurrency.sign}" maxlength="1"></p:inputText>
+        <p:outputLabel id="currency_code_label" for="currency_code_input">Код:</p:outputLabel>
+        <p:inputText id="currency_code_input" value="#{addCurrency.code}" maxlength="3"></p:inputText>
+        <p:commandButton id="AddExpence" update="currencies" type="submit" value="Создать"
+                         actionListener="#{addCurrency.create}" styleClass="ui-priority-primary"/>
+
+    </p:dialog>
+
+
+    <p:dataTable id="currencies" var="currency" value="#{configurationView.currencies}" paginator="true" row="10"
+                 selection="#{configurationView.selectedCurrencies}" rowKey="#{currency.id}" lazy="false">
+        <c:facet name="header">
+            Валюта
+        </c:facet>
+
+        <p:column selectionMode="multiple" style="width:2%"/>
+
+        <p:column>
+            <c:facet name="header">
+                <h:outputText value="Название"/>
+            </c:facet>
+            <h:outputText value="#{currency.name}"/>
+
+        </p:column>
+
+        <p:column>
+            <c:facet name="header">
+                <h:outputText value="Знак"/>
+            </c:facet>
+            <h:outputText value="#{currency.sign}"/>
+        </p:column>
+
+        <p:column>
+            <c:facet name="header">
+                <h:outputText value="Код"/>
+            </c:facet>
+            <h:outputText value="#{currency.code}"/>
+        </p:column>
+
+
+        <c:facet name="footer">
+            <p:commandButton id="deletButton" value="Удалить"
+                             update="currencies" actionListener="#{configurationView.removeCurrency}"/>
+        </c:facet>
+    </p:dataTable>
+    <p/>
+    <p:commandButton id="addAccountButton" type="button" value="Добавить аккаунт" onclick="addAccountDlg.show()"/>
+    <p:dialog header="Добавить аккаунт" widgetVar="addAccountDlg" resizable="false">
+
+        <p:outputLabel id="account_firstname_label" for="account_firstname_input">Имя:</p:outputLabel>
+        <p:inputText id="account_firstname_input" value="#{addAccount.firstName}" maxlength="15"></p:inputText>
+        <p:outputLabel id="account_lastname_label" for="account_lastname_input">Знак:</p:outputLabel>
+        <p:inputText id="account_lastname_input" value="#{addAccount.lastName}" maxlength="15"></p:inputText>
+        <p:commandButton id="create-button" update="accounts" type="submit" value="Создать" actionListener="#{addAccount.create}" styleClass="ui-priority-primary"/>
+
+    </p:dialog>
+
+    <p:dataTable id="accounts" var="account" value="#{configurationView.accounts}" paginator="true" row="10"
+                 selection="#{configurationView.selectedAccounts}" rowKey="#{account.id}" lazy="false">
+        <c:facet name="header">
+            Аккаунты
+        </c:facet>
+
+        <p:column selectionMode="multiple" style="width:2%"/>
+
+        <p:column>
+            <c:facet name="header">
+                <h:outputText value="Название"/>
+            </c:facet>
+            <h:outputText value="#{account.firstName}"/>
+
+        </p:column>
+
+        <p:column>
+            <c:facet name="header">
+                <h:outputText value="Фамилия"/>
+            </c:facet>
+            <h:outputText value="#{account.lastName}"/>
+        </p:column>
+
+        <c:facet name="footer">
+            <p:commandButton id="account-delet-button" value="Удалить"
+                             update="accounts" actionListener="#{configurationView.removeAccount}"/>
+        </c:facet>
+    </p:dataTable>
+</h:form>
+</body>
+</html>
