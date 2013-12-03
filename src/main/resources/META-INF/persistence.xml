@@ -11,35 +11,11 @@
         <class>org.zaverukha.budgetmanager.jpa.Account</class>
 
         <properties>
-            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />-->
-            <!--<property name="hbm2ddl.auto" value="create" />-->
-            <!--<property name="hibernate.connection.useUnicode" value="true" />-->
-            <!--<property name="hibernate.connection.characterEncoding"-->
-                      <!--value="AL32UTF8" />-->
-            <!--<property name="hibernate.connection.charSet" value="AL32UTF8" />-->
-
             <property name="eclipselink.target-database" value="Oracle" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
             <property name="eclipselink.logging.level" value="INFO" />
-            <!--
-            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:localhost:1521:orcl" />
-            <property name="javax.persistence.jdbc.user" value="test" />
-            <property name="javax.persistence.jdbc.password" value="test" />
-            -->
         </properties>
-        <!--
-        <properties>
-            <property name="eclipselink.target-database" value="DERBY" />
-            <property name="eclipselink.ddl-generation" value="create-tables" />
-            <property name="eclipselink.logging.level" value="INFO" />
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/BudgetManager" />
-            <property name="javax.persistence.jdbc.user" value="test" />
-            <property name="javax.persistence.jdbc.password" value="test" />
-        </properties>
-        -->
     </persistence-unit>
 
 </persistence>
