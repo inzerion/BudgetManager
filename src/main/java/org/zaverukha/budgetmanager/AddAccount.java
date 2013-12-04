@@ -1,14 +1,14 @@
 package org.zaverukha.budgetmanager;
 
-import org.zaverukha.budgetmanager.ejb.AccountManager;
-import org.zaverukha.budgetmanager.ejb.CurrencyManager;
-import org.zaverukha.budgetmanager.jpa.Account;
-import org.zaverukha.budgetmanager.jpa.Currency;
+import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
+
+import org.zaverukha.budgetmanager.ejb.AccountManager;
+import org.zaverukha.budgetmanager.jpa.Account;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,10 +17,11 @@ import javax.faces.event.ActionEvent;
  * Time: 14:45
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean
+@Named
 @SessionScoped
-public class AddAccount {
-    @EJB
+public class AddAccount implements Serializable {
+	private static final long serialVersionUID = 5277135173717933964L;
+	@EJB
     private AccountManager ejbManager;
     String firstName;
     String lastName;

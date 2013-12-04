@@ -1,15 +1,17 @@
 package org.zaverukha.budgetmanager;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
+import javax.inject.Named;
+
 import org.zaverukha.budgetmanager.ejb.AccountManager;
 import org.zaverukha.budgetmanager.ejb.CurrencyManager;
 import org.zaverukha.budgetmanager.jpa.Account;
 import org.zaverukha.budgetmanager.jpa.Currency;
-
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,10 +20,12 @@ import java.util.List;
  * Time: 11:13
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean
+@Named
 @SessionScoped
-public class ConfigurationView {
-    @EJB
+public class ConfigurationView implements Serializable{
+	private static final long serialVersionUID = 3638800492322654168L;
+
+	@EJB
     private CurrencyManager currencyManager;
 
     @EJB

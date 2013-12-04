@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:f="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Менеджер Бюджета</title>
+    </h:head>
+    <body>
+<!--   <c:loadBundle basename="org.zaverukha.budgetmanager.messages"
+              var="msg"/> -->  
+    <f:insert name="menu" >
+        <f:include src="/pages/template/common/menu.xhtml" />
+    </f:insert>
+    <div id="sidebar">
+               <h3>Language switcher:</h3>
+               <h:form id="langauge_form">
+                 <h:commandLink action="#{languageSwitcher.changeLanguage('en')}" value="English" /> |
+                 <h:commandLink action="#{languageSwitcher.changeLanguage('fr')}" value="France" /> |
+                 <h:commandLink action="#{languageSwitcher.changeLanguage('ru')}" value="Russian" />   
+               </h:form>
+    </div>
+    <h:form id="addMoneyTrafficForm" >
+        <p:commandButton id="addRecordButton" type="button" value="Добавить запись" onclick="addRecordDlg.show()"/>
+        <p/>
+
+
+        <p:calendar value="#{recordsView.fromCalendarBean.date}" id="fromCalendarBean" showOn="button">
+            <p:ajax event="dateSelect" update="records"/>
+        </p:calendar>
+        <p:calendar value="#{recordsView.toCalendarBean.date}" id="toCalendarBean" showOn="button">
+            <p:ajax event="dateSelect" update="records"/>
+        </p:calendar>
+        <p:dataTable id="records" var="record" value="#{recordsView.records}" paginator="true" 
+                     selection="#{recordsView.selectedRecords}" rowKey="#{record.id}">
+            <c:facet name="header">
+                #{msg['records']}
+            </c:facet>
+
+            <p:column selectionMode="multiple" style="width:2%"/>
+
+            <p:column>
+                <c:facet name="header">
+                    <h:outputText value="Сумма"/>
+                </c:facet>
+                <h:outputText value="#{record.ammount}"/>
+
+            </p:column>
+
+            <p:column>
+                <c:facet name="header">
+                    <h:outputText value="Дата"/>
+                </c:facet>
+                <h:outputText value="#{record.date}"/>
+            </p:column>
+
+            <c:facet name="footer">
+                <p:commandButton id="deletButton" value="Удалить"
+                                 update="records" actionListener="#{recordsView.removeRecord}"/>
+            </c:facet>
+        </p:dataTable>
+
+        <p:dialog header="Добавить запись" widgetVar="addRecordDlg" resizable="false">
+
+            <p:growl id="growl" showDetail="true"/>
+            <p:calendar value="#{recordsView.addRecordCalendar.date}" id="addTraficCalendar" showOn="button"/>
+            <h:outputLabel id="ammountLabel" for="ammountInput" value="Сумма: "/>
+            <p:inputText id="ammountInput" label="Ammount" value="#{recordsView.ammount}">
+                <c:convertNumber maxFractionDigits="2"
+                                 groupingUsed="true"
+                                 maxIntegerDigits="6"
+                                 type="number"/>
+
+            </p:inputText>
+            <p:commandButton value="Доход"  update="records" id="AddIncome" type="submit"
+                             actionListener="#{recordsView.addIncome}" styleClass="ui-priority-primary"/>
+            <p:commandButton value="Расход" update="records" id="AddExpence" type="submit"
+                             actionListener="#{recordsView.addExpense}" styleClass="ui-priority-primary"/>
+
+        </p:dialog>
+    </h:form>
+
+    </body>
+    </html>

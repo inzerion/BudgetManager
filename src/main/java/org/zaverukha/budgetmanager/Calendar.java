@@ -1,8 +1,10 @@
 package org.zaverukha.budgetmanager;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,10 +13,11 @@ import java.util.Date;
  * Time: 22:07
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean
+@Named
 @SessionScoped
-public class Calendar {
-    Date date = new Date();
+public class Calendar implements Serializable {
+	private static final long serialVersionUID = 4448284220680701837L;
+	Date date = new Date();
     public Date getDate() {
         return date;
     }

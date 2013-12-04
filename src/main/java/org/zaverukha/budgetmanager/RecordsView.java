@@ -1,15 +1,17 @@
 package org.zaverukha.budgetmanager;
 
-import org.zaverukha.budgetmanager.ejb.RecordManager;
-import org.zaverukha.budgetmanager.jpa.Record;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import java.util.List;
+import javax.inject.Named;
+
+import org.zaverukha.budgetmanager.ejb.RecordManager;
+import org.zaverukha.budgetmanager.jpa.Record;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,11 +20,12 @@ import java.util.List;
  * Time: 5:21 PM
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean
+@Named
 @SessionScoped
-public class RecordsView {
+public class RecordsView implements Serializable{
+	private static final long serialVersionUID = -4198624851730923886L;
 
-    private enum MoneyTraficEnum { INCOME, EXPENSE };
+	private enum MoneyTraficEnum { INCOME, EXPENSE };
 
 
     @EJB

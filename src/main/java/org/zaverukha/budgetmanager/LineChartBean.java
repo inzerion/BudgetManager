@@ -1,12 +1,13 @@
 package org.zaverukha.budgetmanager;
 
+import java.io.Serializable;
+
+import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,10 +16,11 @@ import java.io.Serializable;
  * Time: 23:34
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class LineChartBean  implements Serializable {
-    private CartesianChartModel categoryModel;
+	private static final long serialVersionUID = 4641420610242772206L;
+	private CartesianChartModel categoryModel;
     private CartesianChartModel linearModel;
     public LineChartBean() {
         createCategoryModel();

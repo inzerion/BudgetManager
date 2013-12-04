@@ -5,16 +5,14 @@
              version="2.0">
     <persistence-unit name="BudgetManager" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <jta-data-source>jdbc/OracleDS</jta-data-source>
+        <jta-data-source>jdbc/_BudgetManager</jta-data-source>
         <class>org.zaverukha.budgetmanager.jpa.Record</class>
         <class>org.zaverukha.budgetmanager.jpa.Currency</class>
         <class>org.zaverukha.budgetmanager.jpa.Account</class>
 
         <properties>
-            <property name="eclipselink.target-database" value="Oracle" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
-            <property name="eclipselink.ddl-generation.output-mode" value="database" />
-            <property name="eclipselink.logging.level" value="INFO" />
+<!--            <property name="eclipselink.logging.level" value="INFO" />-->
         </properties>
     </persistence-unit>
 
