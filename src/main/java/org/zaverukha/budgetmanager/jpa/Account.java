@@ -19,27 +19,17 @@ public class Account {
     @GeneratedValue
     private Long id;
     @Column(length = 15)
-    private String firstName;
-    @Column(length = 15)
-    private String lastName;
+    private String name;
 
     public Long getId() {
         return id;
     }
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

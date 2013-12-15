@@ -1,4 +1,4 @@
-package org.zaverukha.budgetmanager;
+package org.zaverukha.budgetmanager.beans;
 
 import java.io.Serializable;
 
@@ -23,29 +23,19 @@ public class AddAccount implements Serializable {
 	private static final long serialVersionUID = 5277135173717933964L;
 	@EJB
     private AccountManager ejbManager;
-    String firstName;
-    String lastName;
+    String name;
 
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void create(ActionEvent event){
         Account account = new Account();
-        account.setFirstName(getFirstName());
-        account.setLastName(getLastName());
+        account.setName(getName());
         ejbManager.create(account);
     }
 }

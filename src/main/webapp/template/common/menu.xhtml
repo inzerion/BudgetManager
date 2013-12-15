@@ -4,17 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:c="http://java.sun.com/jsf/core"
       xmlns:f="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
 <body>
 <f:composition>
     <h:form>
+       	<div id="sidebar">
+        	<div>#{msg['main.language']}</div>
+            <div>
+            	<h:commandLink action="#{languageSwitcher.changeLanguage('en')}" value="English" /> |
+                <h:commandLink action="#{languageSwitcher.changeLanguage('ru')}" value="Русский" />
+            </div>
+    	</div>
         <p:tabMenu id="tabMenu" activeIndex="#{mainView.activeIndex}" widgetVar="">
-            <p:menuitem value="Управление Бюджетом" url="/">
+            <p:menuitem value="#{msg['menu.budgetManager']}" url="/">
               <c:param name="activeIndex" value="0"/>
             </p:menuitem>
 
             <!--<p:menuitem value="Графики" url="/pages/graphs.xhtml"/>-->
-            <p:menuitem value="Конфигурация" url="pages/configuration.xhtml">
+            <p:menuitem value="#{msg['menu.configuration']}" url="configuration.xhtml">
                 <c:param name="activeIndex" value="1"/>
             </p:menuitem>
         </p:tabMenu>

@@ -13,5 +13,7 @@
     	<base-name>org.zaverukha.budgetmanager.mes</base-name>
         <var>msg</var>
     </resource-bundle>
+
+
 </application>
 </faces-config>

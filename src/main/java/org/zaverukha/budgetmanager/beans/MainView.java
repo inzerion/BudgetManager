@@ -1,4 +1,4 @@
-package org.zaverukha.budgetmanager;
+package org.zaverukha.budgetmanager.beans;
 
 import java.io.Serializable;
 import java.util.Map;
