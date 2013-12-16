@@ -1,13 +1,16 @@
 package org.zaverukha.budgetmanager.beans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import java.util.Date;
 import javax.inject.Named;
 
 import org.zaverukha.budgetmanager.ejb.RecordManager;
@@ -30,42 +33,44 @@ public class RecordsView implements Serializable{
 
     @EJB
     private RecordManager recordManager;
-    Calendar fromCalendarBean = new Calendar();
-    Calendar toCalendarBean = new Calendar();
-    Calendar addRecordCalendar = new Calendar();
 
-    double ammount;
+    private  Date fromCalendarBean = prevDate();
+    private Date toCalendarBean = new Date();;
+    private Date addRecordCalendar = new Date();;
+    private double ammount;
+
+    public Date getFromCalendarBean() {
+        return fromCalendarBean;
+    }
+
+    public void setFromCalendarBean(Date fromCalendarBean) {
+        this.fromCalendarBean = fromCalendarBean;
+    }
+
+    public Date getToCalendarBean() {
+        return toCalendarBean;
+    }
+
+    public void setToCalendarBean(Date toCalendarBean) {
+        this.toCalendarBean = toCalendarBean;
+    }
+
+    public Date getAddRecordCalendar() {
+        return addRecordCalendar;
+    }
+
+    public void setAddRecordCalendar(Date addRecordCalendar) {
+        this.addRecordCalendar = addRecordCalendar;
+    }
+
+
+
     public double getAmmount() {
         return ammount;
     }
 
     public void setAmmount(double ammount) {
         this.ammount = ammount;
-    }
-
-    public Calendar getAddRecordCalendar() {
-        return addRecordCalendar;
-    }
-
-    public void setAddRecordCalendar(Calendar addRecordCalendar) {
-        this.addRecordCalendar = addRecordCalendar;
-    }
-
-
-    public Calendar getToCalendarBean() {
-        return toCalendarBean;
-    }
-
-    public void setToCalendarBean(Calendar toCalendarBean) {
-        this.toCalendarBean = toCalendarBean;
-    }
-
-    public Calendar getFromCalendarBean() {
-        return fromCalendarBean;
-    }
-
-    public void setFromCalendarBean(Calendar fromCalendarBean) {
-        this.fromCalendarBean = fromCalendarBean;
     }
 
     public Record[] getSelectedRecords() {
@@ -78,13 +83,16 @@ public class RecordsView implements Serializable{
 
     private Record[] selectedRecords;
 
+
+
+
     public RecordsView(){
 
     }
 
 
     public List<Record> getRecords() {
-        return recordManager.findRecords(fromCalendarBean.getDate(), toCalendarBean.getDate());
+        return recordManager.findRecords(fromCalendarBean, toCalendarBean);
     }
 
     public void addIncome(ActionEvent event){
@@ -99,7 +107,7 @@ public class RecordsView implements Serializable{
         Record expense = new Record();
         ammount = correctAmmount(type, ammount);
         expense.setAmmount(ammount);
-        expense.setDate(addRecordCalendar.getDate());
+        expense.setDate(addRecordCalendar);
         recordManager.createExpense(expense);
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -116,6 +124,13 @@ public class RecordsView implements Serializable{
         for(int i = 0; i < selectedRecords.length; i++){
             recordManager.removeRecord(selectedRecords[i]);
         }
+
+    }
+
+    private static Date prevDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_WEEK, -1);
+        return calendar.getTime();
 
     }
 }

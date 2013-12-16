@@ -2,8 +2,8 @@ package org.zaverukha.budgetmanager.beans;
 
 import java.io.Serializable;
 
-import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
+import javax.ejb.EJB;;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
@@ -18,7 +18,7 @@ import org.zaverukha.budgetmanager.jpa.Currency;
  * To change this template use File | Settings | File Templates.
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class AddCurrency implements Serializable{
 	private static final long serialVersionUID = 1893592098038631204L;
 	@EJB

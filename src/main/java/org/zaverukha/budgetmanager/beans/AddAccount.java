@@ -3,7 +3,7 @@ package org.zaverukha.budgetmanager.beans;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
@@ -18,7 +18,7 @@ import org.zaverukha.budgetmanager.jpa.Account;
  * To change this template use File | Settings | File Templates.
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class AddAccount implements Serializable {
 	private static final long serialVersionUID = 5277135173717933964L;
 	@EJB
