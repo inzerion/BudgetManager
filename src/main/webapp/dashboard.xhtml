@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:f="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Dashboard</title>
+</h:head>
+<body>
+<f:insert name="menu" >
+    <f:include src="template/common/menu.xhtml" />
+</f:insert>
+<p:panel>
+    <h:form>
+    <p:calendar value="${dashboardBean.fromDate}" id="fromCalendarBean" showOn="button">
+        <p:ajax event="dateSelect" update=":category"  listener="#{dashboardBean.handleFromDateSelect}"/>
+    </p:calendar>
+    <p:calendar value="${dashboardBean.toDate}" id="toCalendarBean" showOn="button">
+        <p:ajax event="dateSelect" update=":category" listener="#{dashboardBean.handleToDateSelect}"/>
+    </p:calendar>
+
+    </h:form>
+    <p:lineChart id="category" value="#{dashboardBean.model}" legendPosition="e"
+                 stacked="true" title="Category Chart" minY="0" maxY="200" style="height:300px;margin-top:20px"/>
+
+</p:panel>
+</body>
+</html>

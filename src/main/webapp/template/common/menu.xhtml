@@ -21,9 +21,12 @@
               <c:param name="activeIndex" value="0"/>
             </p:menuitem>
 
-            <!--<p:menuitem value="Графики" url="/pages/graphs.xhtml"/>-->
             <p:menuitem value="#{msg['menu.configuration']}" url="configuration.xhtml">
                 <c:param name="activeIndex" value="1"/>
+            </p:menuitem>
+
+            <p:menuitem value="#{msg['menu.dashboard']}" url="dashboard.xhtml">
+                <c:param name="activeIndex" value="3"/>
             </p:menuitem>
         </p:tabMenu>
     </h:form>

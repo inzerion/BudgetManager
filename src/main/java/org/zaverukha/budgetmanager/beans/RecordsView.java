@@ -28,16 +28,22 @@ import org.zaverukha.budgetmanager.jpa.Record;
 public class RecordsView implements Serializable{
 	private static final long serialVersionUID = -4198624851730923886L;
 
-	private enum MoneyTraficEnum { INCOME, EXPENSE };
 
 
     @EJB
     private RecordManager recordManager;
 
-    private  Date fromCalendarBean = prevDate();
-    private Date toCalendarBean = new Date();;
-    private Date addRecordCalendar = new Date();;
+    private Date fromCalendarBean;
+    private Date toCalendarBean;
+    private Date addRecordCalendar;
     private double ammount;
+
+    @PostConstruct
+    private void init(){
+        fromCalendarBean  = previousDay();
+        toCalendarBean = new Date();
+        addRecordCalendar = new Date();
+    }
 
     public Date getFromCalendarBean() {
         return fromCalendarBean;
@@ -96,27 +102,28 @@ public class RecordsView implements Serializable{
     }
 
     public void addIncome(ActionEvent event){
-        addMoneyTrafic(MoneyTraficEnum.INCOME);
+        addMoneyTrafic(Record.RecordType.INCOME);
     }
 
     public void addExpense(ActionEvent event){
-        addMoneyTrafic(MoneyTraficEnum.EXPENSE);
+        addMoneyTrafic(Record.RecordType.EXPENSE);
     }
 
-    private void addMoneyTrafic(MoneyTraficEnum type){
+    private void addMoneyTrafic(Record.RecordType type){
         Record expense = new Record();
         ammount = correctAmmount(type, ammount);
         expense.setAmmount(ammount);
         expense.setDate(addRecordCalendar);
+        expense.setType(type);
         recordManager.createExpense(expense);
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected","Success"));
     }
 
-    private static double correctAmmount(MoneyTraficEnum type, double ammount) {
-        if(type == MoneyTraficEnum.EXPENSE && ammount > 0 ) ammount = -ammount;
-        if(type == MoneyTraficEnum.INCOME && ammount < 0 ) ammount = -ammount;
+    private static double correctAmmount(Record.RecordType type, double ammount) {
+        if(type == Record.RecordType.EXPENSE && ammount > 0 ) ammount = -ammount;
+        if(type == Record.RecordType.INCOME && ammount < 0 ) ammount = -ammount;
         return ammount;
     }
 
@@ -127,7 +134,7 @@ public class RecordsView implements Serializable{
 
     }
 
-    private static Date prevDate(){
+    private static Date previousDay(){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_WEEK, -1);
         return calendar.getTime();

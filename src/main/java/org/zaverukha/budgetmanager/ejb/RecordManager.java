@@ -36,4 +36,19 @@ public class RecordManager {
     public void removeRecord(Record record){
         em.remove(em.merge(record));
     }
+
+    public List<Record> findExpensesByPeriod(Date from, Date to){
+        return findTypedRecordsByPeriod(from, to, Record.RecordType.EXPENSE);
+    }
+
+    public List<Record> findIncomesByPeriod(Date from, Date to){
+        return findTypedRecordsByPeriod(from, to, Record.RecordType.INCOME);
+    }
+    private List<Record> findTypedRecordsByPeriod(Date from, Date to, Record.RecordType type){
+        TypedQuery<Record> query = em.createNamedQuery(Record.FIND_ALL_TYPED_RECORDS, Record.class)
+                .setParameter("fromDate", from)
+                .setParameter("toDate", to)
+                .setParameter("type", type);
+        return query.getResultList();
+    }
 }

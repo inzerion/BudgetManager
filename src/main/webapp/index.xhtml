@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/facelets">
 
     <h:head>
-        <title>Менеджер Бюджета</title>
+        <title>Budget Manager</title>
         <h:outputStylesheet library="default" name="css/style.css"/>
     </h:head>
     <body>
@@ -45,7 +45,7 @@
 
                 <p:column>
                     <c:facet name="header">
-                        <h:outputText value="#{msg['records.date']}"/>
+                        <h:outputText value="#{msg['records.getFormatedDate']}"/>
                     </c:facet>
                     <h:outputText value="#{record.date}"/>
                 </p:column>

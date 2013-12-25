@@ -14,9 +14,15 @@ import java.util.Locale;
  */
 
 @Entity
-@NamedQuery(name = "findAllRecords", query = "SELECT e FROM Record e WHERE e.recordDate between :fromDate and :toDate")
+@NamedQueries({
+        @NamedQuery(name = Record.FIND_ALL_RECORDS, query = "SELECT e FROM Record e WHERE e.recordDate between :fromDate and :toDate"),
+        @NamedQuery(name = Record.FIND_ALL_TYPED_RECORDS, query = "SELECT e FROM Record e WHERE e.recordDate between :fromDate and :toDate and e.type = :type")
+})
+
 public class Record {
-    public static String FIND_ALL_RECORDS = "findAllRecords";
+    public enum RecordType { INCOME, EXPENSE };
+    public static final String FIND_ALL_RECORDS = "findAllRecords";
+    public static final String FIND_ALL_TYPED_RECORDS = "findAllTypedRecords";
 
     public Long getId() {
         return id;
@@ -29,6 +35,17 @@ public class Record {
     private Date recordDate = new Date();
     private double ammount;
 
+    public RecordType getType() {
+        return type;
+    }
+
+    public void setType(RecordType type) {
+        this.type = type;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    RecordType type;
+
     public double getAmmount() {
         return ammount;
     }
@@ -39,8 +56,12 @@ public class Record {
 
 
 
-    public String getDate() {
+    public String getFormatedDate() {
         return DateFormat.getDateInstance(DateFormat.FULL, Locale.forLanguageTag("ru-RU")).format(recordDate);
+    }
+
+    public Date getDate() {
+        return this.recordDate;
     }
 
     public void setDate(Date date) {
