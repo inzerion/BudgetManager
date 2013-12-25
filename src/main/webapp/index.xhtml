@@ -1,81 +1,90 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsf/core"
       xmlns:f="http://java.sun.com/jsf/facelets">
 
-    <h:head>
-        <title>Budget Manager</title>
-        <h:outputStylesheet library="default" name="css/style.css"/>
-    </h:head>
-    <body>
+<h:head>
+    <title>Budget Manager</title>
+    <h:outputStylesheet library="default" name="css/style.css"/>
+</h:head>
+
+<body>
 <!--   <c:loadBundle basename="org.zaverukha.budgetmanager.messages"
-              var="msg"/> -->  
-    <f:insert name="menu" >
-        <f:include src="template/common/menu.xhtml" />
-    </f:insert>
-    <p:panel header="#{msg['records.header']}">
-        <p/>
-        <h:form id="records_form">
-            <p:calendar value="${recordsView.fromCalendarBean}" id="fromCalendarBean" showOn="button">
-                <p:ajax event="dateSelect" update="records"/>
-            </p:calendar>
-            <p:calendar value="${recordsView.toCalendarBean}" id="toCalendarBean" showOn="button">
-                <p:ajax event="dateSelect" update="records"/>
-            </p:calendar>
+              var="msg"/> -->
+<f:insert name="menu">
+    <f:include src="template/common/menu.xhtml"/>
+</f:insert>
+<p:panel header="#{msg['records.header']}">
+    <p/>
+    <h:form id="records_form">
+        <p:calendar value="${recordsView.fromCalendarBean}" id="fromCalendarBean" showOn="button">
+            <p:ajax event="dateSelect" update="records"/>
+        </p:calendar>
+        <p:calendar value="${recordsView.toCalendarBean}" id="toCalendarBean" showOn="button">
+            <p:ajax event="dateSelect" update="records"/>
+        </p:calendar>
 
-            <p:dataTable id="records" var="record" value="#{recordsView.records}" paginator="true"
-                         selection="#{recordsView.selectedRecords}" rowKey="#{record.id}">
+        <p:dataTable id="records" var="record" value="#{recordsView.records}" paginator="true"
+                     selection="#{recordsView.selectedRecords}" rowKey="#{record.id}">
+            <c:facet name="header">
+                <p:commandButton id="addRecordButton" type="button" value="#{msg['records.add']}"
+                                 onclick="addRecordDlg.show()" styleClass="commandButton"/>
+                <p:commandButton id="deletButton" value="#{msg['records.delete']}"
+                                 update="records" actionListener="#{recordsView.removeRecord}"/>
+            </c:facet>
+            <p:column selectionMode="multiple" style="width:2%"/>
+
+            <p:column>
                 <c:facet name="header">
-                    <p:commandButton id="addRecordButton" type="button" value="#{msg['records.add']}" onclick="addRecordDlg.show()" styleClass="commandButton"/>
-                    <p:commandButton id="deletButton" value="#{msg['records.delete']}"
-                                     update="records" actionListener="#{recordsView.removeRecord}"/>
+                    <h:outputText value="#{msg['records.ammount']}"/>
                 </c:facet>
-                <p:column selectionMode="multiple" style="width:2%"/>
+                <h:outputText value="#{record.ammount}"/>
 
-                <p:column>
-                    <c:facet name="header">
-                        <h:outputText value="#{msg['records.ammount']}"/>
-                    </c:facet>
-                    <h:outputText value="#{record.ammount}"/>
+            </p:column>
 
-                </p:column>
+            <p:column>
+                <c:facet name="header">
+                    <h:outputText value="#{msg['records.date']}"/>
+                </c:facet>
+                <h:outputText value="#{record.date}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
 
-                <p:column>
-                    <c:facet name="header">
-                        <h:outputText value="#{msg['records.date']}"/>
-                    </c:facet>
-                    <h:outputText value="#{record.date}"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+    <h:form id="add_money_dialog_form">
+        <p:dialog header="#{msg['records.addRecordTitle']}" widgetVar="addRecordDlg" resizable="false">
+            <p:panel style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
 
-        <h:form id="add_money_dialog_form" >
-            <p:dialog header="#{msg['records.addRecordTitle']}" widgetVar="addRecordDlg" resizable="false">
+                    <h:outputLabel id="dateLabel" for="add_date" value="Date: "/>
+                    <p:calendar value="#{recordsView.addRecordCalendar}" id="add_date" showOn="button"/>
+                    <h:outputLabel id="ammountLabel" for="ammountInput" value="#{msg['records.ammount']}: "/>
+                    <p:inputText id="ammountInput" label="Ammount" value="#{recordsView.ammount}">
+                        <c:convertNumber maxFractionDigits="2"
+                                         groupingUsed="true"
+                                         maxIntegerDigits="6"
+                                         type="number"/>
 
-                <p:growl id="growl" showDetail="true"/>
-                <p:calendar value="#{recordsView.addRecordCalendar}" id="addTraficCalendar" showOn="button"/>
-                <h:outputLabel id="ammountLabel" for="ammountInput" value="#{msg['records.ammount']}: "/>
-                <p:inputText id="ammountInput" label="Ammount" value="#{recordsView.ammount}">
-                    <c:convertNumber maxFractionDigits="2"
-                                     groupingUsed="true"
-                                     maxIntegerDigits="6"
-                                     type="number"/>
-
-                </p:inputText>
-                <p:selectOneMenu id="currency" value="#{recordsView.currency}">
-                    <!--<c:selectItem itemLabel="Select currency" itemValue="" />-->
-                    <c:selectItems value="#{recordsView.currencies}" />
-                </p:selectOneMenu>
-                <p:commandButton value="#{msg['records.addIncome']}"   update=":records_form:records" id="add_income" type="submit"
-                                 actionListener="#{recordsView.addIncome}" />
-                <p:commandButton value="#{msg['records.addExpense']}" update=":records_form:records" id="add_expence" type="submit"
-                                 actionListener="#{recordsView.addExpense}"/>
-
-            </p:dialog>
-         </h:form>
-    </p:panel>
-    </body>
-    </html>
+                    </p:inputText>
+                    <h:outputLabel id="currencyLabel" for="currency" value="Currency: "/>
+                    <p:selectOneMenu id="currency" value="#{recordsView.currency}">
+                        <!--<c:selectItem itemLabel="Select currency" itemValue="" />-->
+                        <c:selectItems value="#{recordsView.currencies}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="#{msg['records.addIncome']}" update=":records_form:records" id="add_income"
+                                     type="submit"
+                                     actionListener="#{recordsView.addIncome}"/>
+                    <p:commandButton value="#{msg['records.addExpense']}" update=":records_form:records"
+                                     id="add_expence" type="submit"
+                                     actionListener="#{recordsView.addExpense}"/>
+                </h:panelGrid>
+            </p:panel>
+        </p:dialog>
+    </h:form>
+</p:panel>
+</body>
+</html>
