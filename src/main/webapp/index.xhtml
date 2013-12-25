@@ -45,7 +45,7 @@
 
                 <p:column>
                     <c:facet name="header">
-                        <h:outputText value="#{msg['records.getFormatedDate']}"/>
+                        <h:outputText value="#{msg['records.date']}"/>
                     </c:facet>
                     <h:outputText value="#{record.date}"/>
                 </p:column>
@@ -65,6 +65,10 @@
                                      type="number"/>
 
                 </p:inputText>
+                <p:selectOneMenu id="currency" value="#{recordsView.currency}">
+                    <!--<c:selectItem itemLabel="Select currency" itemValue="" />-->
+                    <c:selectItems value="#{recordsView.currencies}" />
+                </p:selectOneMenu>
                 <p:commandButton value="#{msg['records.addIncome']}"   update=":records_form:records" id="add_income" type="submit"
                                  actionListener="#{recordsView.addIncome}" />
                 <p:commandButton value="#{msg['records.addExpense']}" update=":records_form:records" id="add_expence" type="submit"

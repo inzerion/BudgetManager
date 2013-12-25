@@ -35,6 +35,18 @@ public class Record {
     private Date recordDate = new Date();
     private double ammount;
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="currency_id")
+    private Currency currency;
+
     public RecordType getType() {
         return type;
     }
@@ -53,6 +65,8 @@ public class Record {
     public void setAmmount(double ammount) {
         this.ammount = ammount;
     }
+
+
 
 
 

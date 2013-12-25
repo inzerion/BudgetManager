@@ -13,7 +13,9 @@ import javax.faces.event.ActionEvent;
 import java.util.Date;
 import javax.inject.Named;
 
+import org.zaverukha.budgetmanager.ejb.CurrencyManager;
 import org.zaverukha.budgetmanager.ejb.RecordManager;
+import org.zaverukha.budgetmanager.jpa.Currency;
 import org.zaverukha.budgetmanager.jpa.Record;
 
 /**
@@ -32,11 +34,26 @@ public class RecordsView implements Serializable{
 
     @EJB
     private RecordManager recordManager;
-
+    @EJB
+    private CurrencyManager currencyManager;
     private Date fromCalendarBean;
     private Date toCalendarBean;
     private Date addRecordCalendar;
     private double ammount;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    String currency;
+
+    public List<Currency> getCurrencies(){
+        return currencyManager.findAll();
+    }
 
     @PostConstruct
     private void init(){
@@ -110,12 +127,13 @@ public class RecordsView implements Serializable{
     }
 
     private void addMoneyTrafic(Record.RecordType type){
-        Record expense = new Record();
+        Record record = new Record();
         ammount = correctAmmount(type, ammount);
-        expense.setAmmount(ammount);
-        expense.setDate(addRecordCalendar);
-        expense.setType(type);
-        recordManager.createExpense(expense);
+        record.setAmmount(ammount);
+        record.setDate(addRecordCalendar);
+        record.setType(type);
+        record.setCurrency(currencyManager.findBySign(currency));
+        recordManager.createExpense(record);
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected","Success"));

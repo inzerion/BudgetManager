@@ -32,6 +32,11 @@ public class CurrencyManager {
         return records.getResultList();
     }
 
+    public Currency findBySign(String sign){
+        TypedQuery<Currency> query =  em.createQuery("select c from Currency c where c.sign = :sign", Currency.class);
+        return query.setParameter("sign", sign).getSingleResult();
+    }
+
     public void remove(Currency currency){
         em.remove(em.merge(currency));
     }
